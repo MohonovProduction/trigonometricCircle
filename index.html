@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <title>Mihail Mohonov</title>
+    <style>
+        #app {
+            width: 100%;
+        }
+        .circle {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 3px black solid;
+        }
+        .circle-O {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 5px;
+            height: 5px;
+            background: black;
+            border-radius: 50%;
+        }
+        .card-body {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="card">
+        <div class="card-header">
+            <h1></h1>
+            <h2 class="card-title">sin: {{sin}}</h2>
+            <h2 class="card-title">cos: {{cos}}</h2>
+            <h2 class="card-title">tg: {{tg}}</h2>
+            <h2 class="card-title">ctg: {{ctg}}</h2>
+        </div>
+        <div class="card-body">
+            <div class="circle" id="circle" @click="calculate">
+                <div class="circle-O"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            sin: 1,
+            cos: 2,
+            tg: 4,
+            ctg: 5,
+        },
+        methods: {
+            calculate(event) {
+                const circle = {}
+                circle.el = document.querySelector('#circle')
+                circle.rect = circle.el.getBoundingClientRect()
+                circle.center = {
+                    x: circle.rect.x + circle.rect.width / 2,
+                    y: circle.rect.y + circle.rect.height / 2
+                }
+
+                const user = {
+                    x: event.clientX,
+                    y: event.clientY
+                }
+
+                let r = 1 / (circle.rect.width / 2)
+                this.sin = r * (circle.center.y - user.y)
+                this.cos = r * (user.x - circle.center.x)
+                this.tg = this.sin / this.cos
+                this.ctg = this.cos / this.sin
+
+                console.log(circle)
+
+                console.log(event.clientX)
+                console.log(event.clientY)
+
+            },
+        }
+    })
+</script>
+</html>
