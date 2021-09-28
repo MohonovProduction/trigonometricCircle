@@ -44,9 +44,11 @@
             <h2 class="card-title">ctg: {{ctg}}</h2>
         </div>
         <div class="card-body">
-            <div class="circle" id="circle" @click="calculate">
-                <div class="circle-O"></div>
-            </div>
+            <svg viewBox="-150 -150 300 300" width="300px" height="300px" id="circle" @click="calculate">
+                <circle r="147px" cx="0" cy="0" fill="white" stroke="black" stroke-width="3px"></circle>
+                <line x1="0" y1="0" :x2="circle.radius.x" :y2="circle.radius.y" stroke="black" stroke-width="3px"></line>
+                <circle r="2" cx="0" cy="0"></circle>
+            </svg>
         </div>
         <div class="card-footer">
             <h5>Author</h5>
@@ -67,21 +69,28 @@
             cos: 'Ø',
             tg: 'Ø',
             ctg: 'Ø',
+            circle: {
+                radius: {
+                    x: 0,
+                    y: 150
+                }
+            },
         },
         methods: {
             calculate(event) {
                 this.show = false
+
                 const circle = {}
                 circle.el = document.querySelector('#circle')
                 circle.rect = circle.el.getBoundingClientRect()
                 circle.center = {
-                    x: circle.rect.x + circle.rect.width / 2,
-                    y: circle.rect.y + circle.rect.height / 2
+                    x: circle.rect.width / 2,
+                    y: circle.rect.height / 2
                 }
 
                 const user = {
-                    x: event.clientX,
-                    y: event.clientY
+                    x: event.layerX,
+                    y: event.layerY
                 }
 
                 let r = 1 / (circle.rect.width / 2)
@@ -89,6 +98,10 @@
                 this.cos = r * (user.x - circle.center.x)
                 this.tg = this.sin / this.cos
                 this.ctg = this.cos / this.sin
+
+                this.circle.radius.x = this.cos * 150
+                this.circle.radius.y = this.sin * -150
+                console.log(this.circle.radius)
             },
         }
     })
