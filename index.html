@@ -31,13 +31,21 @@
         .card-body {
             display: flex;
             justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .input-group-text {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-gap: 10px;
         }
     </style>
 </head>
 <body>
     <div id="app" class="card">
         <div class="card-header">
-            <h1 v-if="show">Please touch the circle for calculate functions</h1>
+            <h1 v-show="show" class="">Please touch the circle for calculate functions</h1>
             <h2 class="card-title">sin: {{sin}}</h2>
             <h2 class="card-title">cos: {{cos}}</h2>
             <h2 class="card-title">tg: {{tg}}</h2>
