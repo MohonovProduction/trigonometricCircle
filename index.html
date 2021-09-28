@@ -37,7 +37,7 @@
 <body>
     <div id="app" class="card">
         <div class="card-header">
-            <h1></h1>
+            <h1 v-if="show">Please touch the circle for calculate functions</h1>
             <h2 class="card-title">sin: {{sin}}</h2>
             <h2 class="card-title">cos: {{cos}}</h2>
             <h2 class="card-title">tg: {{tg}}</h2>
@@ -62,13 +62,15 @@
     let app = new Vue({
         el: '#app',
         data: {
-            sin: 1,
-            cos: 2,
-            tg: 4,
-            ctg: 5,
+            show: true,
+            sin: 'Ø',
+            cos: 'Ø',
+            tg: 'Ø',
+            ctg: 'Ø',
         },
         methods: {
             calculate(event) {
+                this.show = false
                 const circle = {}
                 circle.el = document.querySelector('#circle')
                 circle.rect = circle.el.getBoundingClientRect()
@@ -87,12 +89,6 @@
                 this.cos = r * (user.x - circle.center.x)
                 this.tg = this.sin / this.cos
                 this.ctg = this.cos / this.sin
-
-                console.log(circle)
-
-                console.log(event.clientX)
-                console.log(event.clientY)
-
             },
         }
     })
